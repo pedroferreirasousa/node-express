@@ -9,10 +9,12 @@ const port = 8080;
 
 //com express nao precisa ficar setando manualmente (content-type:)
 
-app.get('/home', (req, res) => {
-  res.status(200).send("<h1>Hello World</h1>")
-})
+// app.get('/home', (req, res) => {
+//   res.status(200).send("<h1>Hello World</h1>")
+// })
 
+
+// ENDPOINT DE PEGAR TODOS USUÁRIOS
 app.get('/users', async (req, res) => {
   try {
     const users = await UserModel.find({}); // se deixar o {} vazio ele tras tudo, da para colocar por exemplo dentro do {} assim : {fistName: 'Pedro'}, ai no caso ele iria trazer apenas o Pedro cadastrado no banco de dados, ou poderia ser ID, Email...
@@ -22,6 +24,22 @@ app.get('/users', async (req, res) => {
   }
 });
 
+//BUSCANDO USUÁRIO PELO ID
+
+app.get('/users/:id', async (req, res) => {  // apos o /users vamos buscar por paramentros o id, "/:id"
+  try{
+    const id = req.params.id;
+
+    const user = await UserModel.findById(id)
+
+    return res.status(200).json(user);
+  } catch {
+    res.status(500).send(error.message)
+  }
+})
+
+
+// CRIAR USUÁRIO
 app.post("/users", async (req, res) => {
   try {
   const user = await UserModel.create(req.body)
