@@ -53,16 +53,35 @@ app.post("/users", async (req, res) => {
 // USA-SE PATCH OU PUT
 //PATCH : ATUALIZAR REGISTRO PARCIALMENTE, EXEMPLO: APENAS O EMAIL.
 //PUT : ATUALIZAR O REGISTRO POR COMPLETO, (MEIO Q EXCLUI TUDO E SOBRESCREVE O NOVO)
-app.patch("/users/:id", async (req,res) => {
-  try{
+app.patch("/users/:id", async (req, res) => {
+  try {
     const id = req.params.id;
 
-    const user = await UserModel.findByIdAndUpdate(id, req.body, {new: true})
+    const user = await UserModel.findByIdAndUpdate(id, req.body, { new: true });
 
-    res.status(200).json(user)
+    res.status(200).json(user);
   } catch (error) {
-    res.status(500).send(error.message)
+    res.status(500).send(error.message);
   }
-})
+});
+
+// DELETANDO USUARIO PELO ID
+
+app.delete("/users/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = await UserModel.findByIdAndDelete(id);
+
+    if (!user) {
+      return res.status(404).json({ message: "Usuário não encontrado" });
+    }
+
+    // Se a exclusão for bem-sucedida, retorna o usuário excluído
+    res.status(200).json(user);
+  } catch (error) {
+    // Se ocorrer um erro interno no servidor (ex: formato de ID inválido), retorna 500
+    res.status(500).send(error.message);
+  }
+});
 
 app.listen(port, () => console.log(`rodando com express na porta ${port}`));
