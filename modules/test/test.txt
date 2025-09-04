@@ -1,0 +1,1 @@
+hello node!E ae, adicionando segundo texto no arquivo
