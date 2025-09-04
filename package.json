@@ -1,0 +1,14 @@
+{
+  "name": "node_estudo",
+  "version": "1.0.0",
+  "description": "Curso node.js",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
